@@ -1,0 +1,45 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+  #drawer class="sidenav" fixedInViewport class="side-bar"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <!-- <mat-toolbar>Menu</mat-toolbar> -->
+    <mat-nav-list>
+      <p><mat-icon matBadge="15" matBadgeColor="warn">home</mat-icon></p>
+      <a mat-list-item [routerLink]="['home']" class="nav-list">Fatou mané Ndiaye</a>
+
+      <a mat-list-item [routerLink]="['home']" class="nav-list">Link 2</a>
+      <a mat-list-item [routerLink]="['home']" class="nav-list">Link 3</a>
+      <div mat-card-avatar>
+        <!-- <img src="./assets/profil.jpg" > -->
+      </div>
+      <!-- <div mat-card-avatar class="example-header-image">
+        <img src="./assets/lo.jpg" >
+      </div> -->
+    </mat-nav-list>
+
+
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon" >menu</mat-icon>
+      </button>
+      <span>gestionUtilisateur </span>
+      <div class="spacer">
+        <a>ghhhf</a>
+      </div>
+
+    </mat-toolbar>
+    <!-- <ng-content></ng-content> -->
+    <ng-content></ng-content>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

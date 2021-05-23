@@ -1,0 +1,932 @@
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{getstatus()}} un utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+<div class="modal-body">
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-row">
+      <div class="form-group col-6">
+
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>Nom</mat-label>
+              <input matInput  formControlName="lastName"
+               [ngClass]="{'is-invalid': (registerForm.get('lastName')?.touched || registerForm.get('lastName')?.dirty || vall)
+               && registerForm.get('lastName')?.errors }" />
+                  <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('lastName')?.errors?.required">Ce champ est obligatoire</div>
+                  </div>
+                  <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('lastName')?.errors?.pattern">Le nom est invalide</div>
+                  </div>
+                  <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+                    <div *ngIf="registerForm.get('lastName')?.errors?.minlength">Le nom doit etre supérieur à deux
+                      Caractéres</div>
+                  </div>
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-hint></mat-hint>
+            </mat-form-field>
+
+
+
+
+        </div>
+
+
+        <div class="form-group col-6">
+         <mat-form-field appearance="outline">
+          <mat-label>Prenom</mat-label>
+          <input matInput formControlName="firstName"
+          [ngClass]="{ 'is-invalid':(registerForm.get('firstName')?.touched || registerForm.get('firstName')?.dirty || vall)
+          && registerForm.get('firstName')?.errors }" />
+
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.required">Ce champ est obligatoire</div>
+        </div>
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.pattern">Le prenom est invalide</div>
+        </div>
+
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.minlenght">Le prenom doit etre supérieur à deux
+            Caractéres</div>
+        </div>
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+        </div>
+
+      </div>
+
+    <div class="form-row">
+      <div class="form-group col-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email"
+          [ngClass]="{ 'is-invalid': (registerForm.get('email')?.touched || registerForm.get('email')?.dirty || vall)
+          && registerForm.get('email')?.errors }" />
+
+          <div *ngIf="vall && registerForm.get('email')?.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.get('email')?.errors?.required">Ce champ est obligatoire</div>
+          </div>
+          <span *ngIf="registerForm.get('email')?.errors?.pattern" class="invalid-feedback">
+            L'E-mail n'est pas valide
+          </span>
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+      </div>
+
+
+
+
+
+
+      <div class="form-group col-6">
+
+        <mat-form-field appearance="outline">
+
+
+          <input matInput  type="text" formControlName="telephone"
+           [ngClass]="{ 'is-invalid':(registerForm.get('telephone')?.touched || registerForm.get('telephone')?.dirty || vall)  &&
+          registerForm.get('telephone')?.errors }"
+          ng2TelInput
+          [ng2TelInputOptions]="{initialCountry: 'sn'}"
+          (hasError)="hasError($event)"
+          (ng2TelOutput)="getNumber($event)"
+          (intlTelInputObject)="telInputObject($event)"
+          (countryChange)="onCountryChange($event)">
+
+          <div *ngIf="registerForm.get('telephone')?.errors?.required" class="invalid-feedback">
+            Ce champ est obligatoire
+          </div>
+
+          <div *ngIf="registerForm.get('telephone')?.errors?.pattern" class="invalid-feedback">
+            le numero nest pas valide
+          </div>
+          <div *ngIf="vall && registerForm.get('telephone')?.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.get('telephone')?.errors?.minlength">Le nombre de chiffre doit etre égal à 9
+            </div>
+          </div>
+
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+      </div>
+
+       </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Date de naissance</mat-label>
+              <input  formControlName="dateNai"  matInput [matDatepicker]="dp" [min]="minDate" [max]="maxDate">
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+
+        <div class="form-group col-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ville de naissance</mat-label>
+          <input matInput  formControlName="ville"
+          [ngClass]="{ 'is-invalid': (registerForm.get('ville')?.touched || registerForm.get('ville')?.dirty || vall)
+          && registerForm.get('ville')?.errors }" />
+
+              <div *ngIf=" registerForm.get('ville')?.errors?.required" class="invalid-feedback">
+              Ce champ est obligatoire
+              </div>
+              <div *ngIf="registerForm.get('ville')?.errors?.minlength" class="invalid-feedback">
+              Le nombre de Caractéres doit etre superieur à 2.
+              </div>
+          <mat-icon matSuffix>contacts</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+      </div>
+
+
+
+      <div class="form-row">
+        <div class="form-group col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="adresse"
+        [ngClass]="{ 'is-invalid': (registerForm.get('adresse')?.touched || registerForm.get('adresse')?.dirty || vall)
+        && registerForm.get('adresse')?.errors }" />
+        <mat-icon matSuffix>contacts</mat-icon>
+        <mat-hint></mat-hint>
+      </mat-form-field>
+      </div>
+
+
+
+  </div>
+
+
+
+  <div class="form-group col-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="dp" [min]="minDate" [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+
+
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-6">
+          <mat-radio-group formControlName="genre">
+            <mat-radio-button value="1">Homme</mat-radio-button>
+            <mat-radio-button value="2">Femme</mat-radio-button>
+            <div *ngIf=" registerForm.get('genre')?.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.get('genre')?.errors?.required">Ce champ est obligatoire</div>
+          </div>
+          </mat-radio-group>
+          </div>
+
+          <div class="form-group col-6">
+          <mat-form-field>
+            <mat-select type="text"  formControlName="pays"
+             [ngClass]="{ 'is-invalid': (registerForm.get('pays')?.touched || registerForm.get('pays')?.dirty || vall)
+              && registerForm.get('pays')?.errors}">
+
+              <mat-option *ngFor="let pay of paysList" [value]="pay.pays">{{pay.pays}}</mat-option>
+
+            </mat-select>
+            <div *ngIf=" registerForm.get('pays')?.errors?.required" class="invalid-feedback">
+              Ce champ est obligatoire
+            </div>
+
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-6">
+          <mat-form-field>
+            <mat-select type="text" formControlName="tPiece" class="form-control" (change)="selectPiece()"
+            [ngClass]="{ 'is-invalid': (registerForm.get('tPiece')?.touched || registerForm.get('tPiece')?.dirty || vall)
+                && registerForm.get('tPiece')?.errors}">
+
+
+              <mat-option value="Passeport">Passeport</mat-option>
+              <mat-option value="CNI">CNI</mat-option>
+              <mat-option value="CEDEAO">CEDEAO</mat-option>
+
+
+            </mat-select>
+
+            <div *ngIf=" registerForm.get('tPiece')?.errors?.required" class="invalid-feedback">
+              Ce champ est obligatoire
+            </div>
+
+
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="form-group col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="numPiece" (blur)="checkPiece()"
+            [ngClass]="{ 'is-invalid': (registerForm?.get('numPiece')?.touched || registerForm.get('numPiece')?.dirty || vall)
+                      && registerForm?.get('numPiece')?.errors }" />
+            <div *ngIf=" registerForm?.get('numPiece')?.errors?.required" class="invalid-feedback">
+              Ce champ est obligatoire
+            </div>
+            <div *ngIf=" registerForm?.get('numPiece')?.errors?.minLength" class="invalid-feedback">
+              {{messagePiece}}
+            </div>
+            <div *ngIf=" registerForm?.get('numPiece')?.errors?.maxLength" class="invalid-feedback">
+              {{messagePiece}}
+            </div>
+            <div *ngIf="errorMessage!='' " class="invalid-feedback">
+              {{errorMessage}}
+            </div>
+            <mat-icon matSuffix>contacts</mat-icon>
+            <mat-hint></mat-hint>
+          </mat-form-field>
+        </div>
+
+        </div>
+
+        <div id="example-espace-td1">
+          <button mat-raised-button color="primary">Ajouter</button>
+         </div>
+
+
+        <div id="example-espace-td">
+        <button mat-raised-button color="warn" >Annuler</button>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- <div class="form-group col-6">
+
+        <span class="obligatoire">*</span><label> Nom</label>
+        <input type="text" formControlName="lastName" class="form-control"
+          [ngClass]="{'is-invalid': (registerForm.get('lastName')?.touched || registerForm.get('lastName')?.dirty || vall)  && registerForm.get('lastName')?.errors }" />
+
+        <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('lastName')?.errors?.required">Ce champ est obligatoire</div>
+        </div>
+        <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('lastName')?.errors?.pattern">Le nom est invalide</div>
+        </div>
+        <div *ngIf="vall && registerForm.get('lastName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('lastName')?.errors?.minlength">Le nom doit etre supérieur à deux
+            Caractéres</div>
+        </div>
+
+
+
+      </div> -->
+
+      <!-- <div class="form-group col-6">
+
+
+
+        <span class="obligatoire">*</span><label>Prenom:</label>
+        <input type="text" formControlName="firstName" class="form-control"
+          [ngClass]="{ 'is-invalid':(registerForm.get('firstName')?.touched || registerForm.get('firstName')?.dirty || vall)  && registerForm.get('firstName')?.errors }" />
+
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.required">Ce champ est obligatoire</div>
+        </div>
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.pattern">Le prenom est invalide</div>
+        </div>
+
+        <div *ngIf="vall && registerForm.get('firstName')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('firstName')?.errors?.minlenght">Le prenom doit etre supérieur à deux
+            Caractéres</div>
+        </div>
+
+
+
+      </div>-->
+
+      <!-- <div class="form-group col-6">
+
+
+        <span class="obligatoire">*</span><label>Email</label>
+        <input type="text" formControlName="email" class="form-control"
+          [ngClass]="{ 'is-invalid': (registerForm.get('email')?.touched || registerForm.get('email')?.dirty || vall) && registerForm.get('email')?.errors }" />
+
+        <div *ngIf="vall && registerForm.get('email')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('email')?.errors?.required">Ce champ est obligatoire</div>
+        </div>
+        <span *ngIf="registerForm.get('email')?.errors?.pattern" class="invalid-feedback">
+          L'E-mail n'est pas valide
+        </span>
+      </div> -->
+
+<!--
+      <div class="form-group col-6">
+
+
+        <span class="obligatoire">*</span><label>Telephone</label>
+
+
+
+        <input type="text" formControlName="telephone" class="form-control" [ngClass]="{ 'is-invalid':(registerForm.get('telephone')?.touched || registerForm.get('telephone')?.dirty || vall)  &&
+               registerForm.get('telephone')?.errors }"
+               ng2TelInput [ng2TelInputOptions]="{initialCountry: 'sn'}"
+          (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
+          (intlTelInputObject)="telInputObject($event)"
+           (countryChange)="onCountryChange($event)"
+            />
+
+
+
+        <div *ngIf="registerForm.get('telephone')?.errors?.required" class="invalid-feedback">
+          Ce champ est obligatoire
+        </div>
+
+        <div *ngIf="registerForm.get('telephone')?.errors?.pattern" class="invalid-feedback">
+          le numero nest pas valide
+        </div>
+        <div *ngIf="vall && registerForm.get('telephone')?.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.get('telephone')?.errors?.minlength">Le nombre de chiffre doit etre égal à 9
+          </div>
+        </div>
+
+      </div> -->
+
+
+
+
+
+      <!-- <div class="form-group col-6">
+
+
+
+        <span class="obligatoire">*</span><label>Ville de naissance</label>
+
+        <div class="input-group">
+
+          <input type="text" class="form-control" formControlName="ville" [ngClass]="{ 'is-invalid': (registerForm.get('ville')?.touched || registerForm.get('ville')?.dirty || vall)
+                      && registerForm.get('ville')?.errors }" />
+
+          <div *ngIf=" registerForm.get('ville')?.errors?.required" class="invalid-feedback">
+            Ce champ est obligatoire
+          </div>
+          <div *ngIf="registerForm.get('ville')?.errors?.minlength" class="invalid-feedback">
+            Le nombre de Caractéres doit etre superieur à 2.
+          </div>
+
+
+
+
+        </div>
+      </div> -->
+
+<!--
+      <div class="form-group col-6">
+
+        <label>Adresse</label>
+        <input type="text" formControlName="adresse" class="form-control" [ngClass]="{ 'is-invalid': (registerForm.get('adresse')?.touched || registerForm.get('adresse')?.dirty || vall)
+               && registerForm.get('adresse')?.errors}"/> -->
+
+        <!-- <div *ngIf=" registerForm.get('adresse')?.errors?.required" class="invalid-feedback">
+                     Ce champ est obligatoire
+                    </div>
+                    <div *ngIf="registerForm.get('adresse')?.errors?.minlength" class="invalid-feedback">
+                     Le nombre de Caractéres doit etre superieur à 2.
+                     </div> -->
+
+
+
+
+      <!-- </div>
+      <div class="form-row">
+        <div class="form-group col-6"> -->
+
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Date de naissance</mat-label>
+            <input class="form-control" formControlName="dateNai"  matInput [matDatepicker]="dp" [min]="minDate" [max]="maxDate">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field> -->
+
+          <!-- <span class="obligatoire">*</span><label>Date de naissance</label>
+
+          <div class="input-group">
+
+            <input type="text" class="form-control" formControlName="dateNai" bsDatepicker>
+
+            <div class="input-group-btn">
+              <button class="btn btn-info">
+                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+              </button>
+            </div>
+
+
+
+
+
+
+          </div> -->
+
+        <!-- <div class="form-group col-6">
+
+
+
+          <span class="obligatoire">*</span><label>Pays</label>
+
+          <div class="input-group">
+
+            <select type="text" placeholder="" class="form-control" formControlName="pays" [ngClass]="{ 'is-invalid': (registerForm.get('pays')?.touched || registerForm.get('pays')?.dirty || vall)
+                            && registerForm.get('pays')?.errors}">
+               <option *ngFor="let pay of paysList" [value]="pay.pays">{{pay.pays}}</option>
+
+            </select>
+
+            <div *ngIf=" registerForm.get('pays')?.errors?.required" class="invalid-feedback">
+              Ce champ est obligatoire
+            </div>
+          </div>
+
+        </div> -->
+
+
+      <!-- </div>
+
+    </div>
+
+    <div class="form-row">
+
+
+
+      <div class="form-group col-12">
+        <span class="obligatoire">*</span><label>Genre</label>
+        <div class="form-control">
+
+
+          <label>M </label>
+          <input type="radio" checked formControlName="genre" value="M"/>
+
+
+          <div *ngIf=" registerForm.get('genre')?.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.get('genre')?.errors?.required">Ce champ est obligatoire</div>
+          </div>
+
+
+
+
+
+          <label>F </label>
+          <input type="radio" formControlName="genre" value="F">
+
+          <div *ngIf=" registerForm.get('genre')?.errors" class="invalid-feedback">
+            <div *ngIf="registerForm.get('genre')?.errors?.required">Ce champ est obligatoire</div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+    <div class="form-row">
+      <div class="form-group col-6">
+
+        <span class="obligatoire">*</span><label>Type de piéce</label>
+
+        <select type="select" formControlName="tPiece" class="form-control" (change)="selectPiece()" [ngClass]="{ 'is-invalid': (registerForm.get('tPiece')?.touched || registerForm.get('tPiece')?.dirty || vall)
+       && registerForm.get('tPiece')?.errors}">
+
+          <option value="Passeport">Passeport</option>
+          <option value="CNI">CNI</option>
+          <option value="CEDEAO">CEDEAO</option>
+
+        </select>
+        <div *ngIf=" registerForm.get('tPiece')?.errors?.required" class="invalid-feedback">
+          Ce champ est obligatoire
+        </div>
+
+
+
+
+
+
+      </div>
+      <div class="form-group col-6">
+
+        <span class="obligatoire">*</span><label>N° du piéce</label>
+
+        <input type="text" formControlName="numPiece" class="form-control" (blur)="checkPiece()" [ngClass]="{ 'is-invalid': (registerForm?.get('numPiece')?.touched || registerForm.get('numPiece')?.dirty || vall)
+       && registerForm?.get('numPiece')?.errors }" />
+
+        <div *ngIf=" registerForm?.get('numPiece')?.errors?.required" class="invalid-feedback">
+          Ce champ est obligatoire
+        </div>
+        <div *ngIf=" registerForm?.get('numPiece')?.errors?.minLength" class="invalid-feedback">
+          {{messagePiece}}
+        </div>
+        <div *ngIf=" registerForm?.get('numPiece')?.errors?.maxLength" class="invalid-feedback">
+          {{messagePiece}}
+        </div>
+        <div *ngIf="errorMessage!='' " class="invalid-feedback">
+          {{errorMessage}}
+        </div>
+ -->
+
+
+
+        <!-- <div *ngIf="registerForm.get('numPiece')?.errors?.genderValidation" class="invalid-feedback">
+         <h2> Passeport re</h2>
+       </div> -->
+
+
+
+
+
+
+      <!-- </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="container">
+
+
+      <div class="row ml-4">
+
+
+
+        <div class="col-ms-6 ml-5">
+
+          <button class="btn btn-danger" type="reset">Annuler</button>
+        </div>
+
+
+        <div class="col-ms-6 ml-4">
+          <button class="btn btn-primary ml-3" type="submit">{{getstatus()}}</button>
+
+        </div>
+
+      </div>
+
+
+    </div>
+  </form> -->
+
+
+
+  <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <div id="example-espace-td">
+          <td>
+
+            <mat-form-field appearance="outline">
+              <mat-label>First name</mat-label>
+              <input matInput placeholder="Placeholder">
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-hint></mat-hint>
+            </mat-form-field>
+
+
+          </td>
+
+
+        </div>
+
+        <td>
+          <div id="example-espace-td">
+         <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Placeholder">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+          </div>
+
+      </td>
+      </tr>
+      <tr>
+
+        <td>
+          <div id="example-espace-td">
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Placeholder">
+          <mat-icon matSuffix>contacts</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+      </div>
+
+
+
+      </td>
+
+
+        <td>
+      <div id="example-espace-td">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Placeholder">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+      </div>
+      </td>
+
+      </tr>
+
+      <tr>
+      <td>
+      <div id="example-espace-td">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="dp" [min]="minDate" [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+
+
+        </div>
+      </td>
+
+      <td>
+        <div id="example-espace-td">
+
+        <mat-form-field appearance="outline">
+
+
+          <input matInput  type="text"
+          ng2TelInput
+          [ng2TelInputOptions]="{initialCountry: 'sn'}"
+          (hasError)="hasError($event)"
+          (ng2TelOutput)="getNumber($event)"
+          (intlTelInputObject)="telInputObject($event)"
+          (countryChange)="onCountryChange($event)">
+          <mat-icon matSuffix>phone</mat-icon>
+
+        </mat-form-field>
+      </div>
+
+
+        </td>
+
+
+    </tr>
+    <tr>
+      <td>
+        <div id="example-espace-td1">
+        <button mat-raised-button color="primary">Ajouter</button>
+      </div>
+      </td>
+      <td>
+        <div id="example-espace-td">
+        <button mat-raised-button color="warn" >Annuler</button>
+      </div>
+      </td>
+
+    </tr>
+
+
+  </table>
+
+
+  </form>
+ </div>
+</div>
+
+ -->
+
+</form>
+</div>
+<div class="modal-footer">
+
+
+</div>
+</ng-template>
+
+
+
+
+<div class="mdc-components">
+<!--toolbar menu-->
+  <mat-toolbar class="colTol" >
+
+    <mat-toolbar-row class="colToll">
+      <div class="users">
+          <span class="material-icons" id="userIcon">
+              people
+          </span>
+          <span id="userText"  class="users">
+             Utilisateurs
+          </span>
+      </div>
+
+      <div class="rech" *ngIf="!deviceXS">
+
+        <span class="material-icons">
+          search
+         </span>
+
+            <input  type="text"  matInput placeholder="Effectuez une recherche">
+            <!-- (keyup)="applyFilter($event.target.value)" -->
+
+<!-- golang swagger -->
+
+       </div>
+
+
+
+
+    </mat-toolbar-row>
+
+
+    <mat-toolbar-row *ngIf="deviceXS">
+
+      <span class="example-spacer"></span>
+
+
+        <button mat-fab class="colorAdd" (click)="open(content); statusValue=false; isUpdate=false"
+        aria-label="Example icon button with a home icon">
+            <mat-icon>add</mat-icon>
+
+        </button>
+
+
+      <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+         <mat-icon>add_circle</mat-icon>
+      </button> -->
+      <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button> -->
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="!deviceXS">
+      <span class="example-spacer"></span>
+
+
+      <button mat-fab class="colorAdd" (click)="open(content); statusValue=false; isUpdate=false"
+      aria-label="Example icon button with a home icon">
+          <mat-icon>add</mat-icon>
+
+      </button>
+    </mat-toolbar-row>
+
+
+    <mat-toolbar-row>
+
+    </mat-toolbar-row>
+
+
+
+
+  </mat-toolbar>
+  <!-- end toolbar menu-->
+
+<!--table des utilisaeurs-->
+  <div class="container">
+
+    <div class="container" id="tableUser">
+      <div class="jumbtron">
+    <table class="table table-striped"  id="excel-table">
+      <thead>
+
+        <tr>
+          <th scope="col">ID </th>
+          <th scope="col">Nom </th>
+          <th scope="col">Prenom</th>
+          <th scope="col">Email</th>
+          <th scope="col">Adresse</th>
+          <th scope="col">Telephone</th>
+          <th scope="col">Date de naissance</th>
+
+          <th scope="col" colspan="2">ACTIONS</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor= "let u of listUser; let i=index" [class.selected]="setCurrentUser === u" >
+
+          <td scope="col">{{i}}</td>
+          <td scope="col">{{u.lastName}}</td>
+          <td scope="col">{{u.firstName}}</td>
+          <td scope="col">{{u.email}}</td>
+          <td scope="col">{{u.adresse}}</td>
+          <td scope="col">{{u.telephone}}</td>
+          <td scope="col">{{u.dateNai }}</td>
+
+
+
+        <td colspan="3">
+          <i class="fa fa-trash-o"  id="icon-del" (click)="onDelete(u)" aria-hidden="true"></i>
+
+          <i class="fa fa-pencil-square-o" id="icon-edi" (click)="open(content) ; statusValue=true; isUpdate=true; editData(u,i)" aria-hidden="true"></i>
+          <!-- <button class="btn btn-info ml-3"   (click)="OnSelect(u);open1(content1) "><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+          <i class="fa fa-eye"  id="icon-det" (click)="OnSelect(u);open1(content1)"
+            aria-hidden="true"></i>
+
+        </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    </div>
+
+    </div>
+
+</div>
+
+<!--fin table-->
+
+
+
+    <!-- https://www.munonye.com/formatting-date-and-time-and-angular-javascript-typescript-localdatetime-ngbdate-datepicker/ -->
+    <!-- http://preview.themeforest.net/item/fuse-angularjs-material-design-admin-template/full_screen_preview/12931855?_ga=2.108912898.1400996638.1612968194-386112706.1612968194&_gac=1.254836090.1612968194.Cj0KCQiApY6BBhCsARIsAOI_GjbBfj3EcFo7eMitVmCIVFMThmz9rHqOTGAijQfP9kS_5RVXprCW9uAaArrZEALw_wcB -->
+    <!-- http://angular-material.fusetheme.com/apps/dashboards/analytics -->
+
+
+
+
+
+
+    <!-- <ng-template #content1 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <app-view  [data]="this.selectUser"></app-view>
+
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+      </div>
+    </ng-template>
+
+     -->
+
+
+
+<!--detail user-->
+<ng-template #content1 let-c="close" let-d="dismiss">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <app-view [data]="this.selectUser"></app-view>
+
+  </div>
+
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button> -->
+  </div>
+</ng-template>
+<!-- fin detail user-->

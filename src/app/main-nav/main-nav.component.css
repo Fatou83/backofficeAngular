@@ -1,0 +1,32 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.app-bar {
+  background-color:#fff;
+}
+.side-bar {
+  background-color: #081c1f;
+}
+.nav-list {
+  color: #fff;
+}
+.example-header-image {
+
+width: 16px;
+height: 6px;
+}
+

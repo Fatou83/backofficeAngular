@@ -1,0 +1,117 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mdc-components {
+
+  font-family: Roboto;
+}
+.colTol{
+  padding-top: 30px;
+  background-color: #00b2cc;
+}
+
+/* met tout le conteneu du div en meme ligne */
+.users{
+  overflow: auto;
+  display: inline-block;
+  margin-top: 18px;
+  margin-left: 30px;
+}
+
+#userIcon{
+  font-size: 1.7em;
+
+  color: white;
+
+}
+.rech {
+
+  margin-top: 34px;
+  margin-left: 80px;
+  position: absolute;
+  height: 10px;
+  width: 500px;
+  border-radius: 30px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  left: 28%;
+}
+input{
+
+    position: relative;
+    border: none;
+    outline: none;
+}
+input[type="text"]{
+  font-size: 0.8em;
+  padding: 0 25px;
+}
+#userText{
+  font-size: 1em;
+  color: white;
+
+}
+
+
+
+.colorAdd{
+  font-size: 3em;
+  color: white;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-right: 30px;
+  margin-bottom: 160px;
+  background-color: #0c3d44;
+}
+.colToll{
+  display: flex;
+  flex-wrap: wrap;
+}
+table {
+
+  background-color: #fff;
+  margin-top: -48px;
+  width: 80%;
+  position: absolute;
+  /* cacher la bordure du table */
+  border-style: hidden;
+  /* border-collapse: collapse; */
+  border-radius: 30px;
+}
+#icon-del{
+  margin-right: 10px;
+  font-size: 15px;
+  color: #d9534f ;
+  cursor: pointer;
+}
+
+#icon-edi{
+  margin-left: 10px;
+  font-size: 15px;
+  color: green ;
+  cursor: pointer;
+}
+#icon-det{
+  margin-left: 10px;
+  font-size: 15px;
+  color: blue ;
+  cursor: pointer;
+}
+ thead{
+  font-size: 19px;
+
+}
+.btn-haut{
+  font-size: 3em;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  margin-top: 33%;
+  margin-left: 92%;
+  background-color: #0c3d44;
+}
+
+
